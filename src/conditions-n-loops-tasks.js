@@ -345,8 +345,49 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+  }
+  const matrixSize = size ** 2;
+  let count = 1;
+  let start = 0;
+  let end = size - 1;
+
+  while (count <= matrixSize) {
+    for (let i = 0; i < size; i += 1) {
+      if (!matrix[start][i]) {
+        matrix[start][i] = count;
+        count += 1;
+      }
+    }
+
+    for (let i = 0; i < size; i += 1) {
+      if (!matrix[i][end]) {
+        matrix[i][end] = count;
+        count += 1;
+      }
+    }
+
+    for (let i = size - 1; i >= 0; i -= 1) {
+      if (!matrix[end][i]) {
+        matrix[end][i] = count;
+        count += 1;
+      }
+    }
+
+    for (let i = size - 1; i >= 0; i -= 1) {
+      if (!matrix[i][start]) {
+        matrix[i][start] = count;
+        count += 1;
+      }
+    }
+    start += 1;
+    end -= 1;
+  }
+
+  return matrix;
 }
 
 /**
@@ -396,8 +437,18 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const copyArr = arr;
+  for (let i = 1; i < copyArr.length; i += 1) {
+    const key = arr[i];
+    let j = i - 1;
+    while (j >= 0 && copyArr[j] > key) {
+      copyArr[j + 1] = copyArr[j];
+      j -= 1;
+    }
+    copyArr[j + 1] = key;
+  }
+  return copyArr;
 }
 
 /**
@@ -417,8 +468,22 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let res = str;
+  for (let i = 1; i <= iterations; i += 1) {
+    let leftHalf = '';
+    let rightHalf = '';
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2 === 0) {
+        leftHalf += res[j];
+      } else {
+        rightHalf += res[j];
+      }
+    }
+    res = leftHalf + rightHalf;
+    if (res === str) return shuffleChar(str, iterations % i);
+  }
+  return res;
 }
 
 /**
